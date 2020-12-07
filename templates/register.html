@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+<!-- gallery application -->
+{% block title %}
+Register
+{% endblock %}
+
+{% block main %}
+<h1 class="page-title">Register</h1>
+<div class="register">
+    <form action="/register" method="post">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="password" placeholder="Password" type="password">
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="confirmation" placeholder="Re-type password" type="password">
+        </div>
+        <button class="btn btn-primary" type="submit">Register </button>
+    </form>
+</div>
+{% endblock %}

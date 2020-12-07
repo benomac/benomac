@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+<!-- gallery application -->
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+
+{% if photo != "yes" %}
+<h1 style="padding-top: 50px;">Delete</h1>
+<p>Are you sure you want to delete the photo</p>
+<img class="gallery_img" src="/static/{{ username + photo }}" alt="user_pic" width="270px" height="180px">
+
+
+<a href="/delete/yes">Yes</a>
+<a href="/gallery">No</a>
+{% endif %}
+{% if photo == "yes" %}
+
+<h1 style="padding-top: 50px;">Deleted</h1>
+
+{% endif %}
+
+
+{% endblock %}

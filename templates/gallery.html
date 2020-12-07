@@ -1,0 +1,118 @@
+{% extends "layout.html" %}
+<!-- gallery application -->
+
+
+{% block title %}
+Gallery
+{% endblock %}
+
+
+
+{% block main %}
+
+
+
+<style>
+  .gallery  {
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+    padding-bottom: 100px;
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  }  
+    
+  .gallery_img 
+  {
+    padding-top: 10px;
+    border: 1px solid #dbdbdb;
+    border-radius: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+  }
+
+  .box {
+  margin: 3px;
+  padding-top: 20px;
+
+  }
+  #desc { 
+    border-bottom: 1px solid #dbdbdb;
+    border-right: 1px solid #dbdbdb;
+    border-left: 1px solid #dbdbdb;
+    border-radius: 1px;
+    font-size: 0.8em;
+    max-height: 80px;
+    color: black;
+    -moz-hyphens:auto;
+    -ms-hyphens:auto;
+    -webkit-hyphens:auto;
+    hyphens:auto;
+    word-wrap:break-word;
+    max-height: 50px;
+    max-width: 270px;
+    overflow-y: scroll;
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+  }
+  .delete, .favs {
+    color: black;
+    font-size: 0.8em;
+    height: 10px;
+    
+  }
+  .favs:hover {
+    color: red;
+  }
+  .delete:hover {
+    color: red;
+  }
+
+ 
+</style>
+
+
+<div class="page-title">
+  
+  <h1>Your Gallery</h1>
+  
+</div>
+
+{% with messages = get_flashed_messages() %} 
+  {% if messages %}
+    {% for message in messages %}
+        <h5 style="text-align: center;"> {{ message }} </h5> <!-- deleted photo message-->
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+{% if warning %}
+  <h1 style="text-align: center;">{{ warning }}</h1> <!-- you dont have any photos warning-->
+{% endif %}
+
+
+
+
+  <div class="gallery">
+      {% for photo, desc in photos.items() %}
+      
+      <div class="box">
+      <a href="/static/{{ username + photo }}">
+            <img class="gallery_img" src="/static/{{ username + photo }}" alt="user_pic" width="270px" height="180px">
+      </a>
+        <div id="desc"><p class="desc_p" style="min-height: 20px; margin-left: 7px; margin-right: 20px;"> {{ desc }}</p></div>
+        
+        {% if nonuser != True %}                          
+        <a style="float: left; padding-left: 10px;" class="delete" href="/delete/{{ photo }}/delete" onclick="return confirm('Are you sure you want to delete this photo?')">Delete</a>
+        {% endif %}
+        <a style="float: right; padding-right: 10px;" class="favs" href="/favs/{{ photo }}/{{ desc }}" onclick="return confirm('Add to favourites?')">Add to favourites</a>
+      </div>  
+      
+    {% endfor %}
+    </div>
+  
+
+ 
+{% endblock %}

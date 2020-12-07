@@ -1,0 +1,108 @@
+{% extends "layout.html" %}
+<!-- gallery application -->
+{% block title %}
+Gallery
+{% endblock %}
+{% block main %}
+
+<style>
+    .gallery  {
+      width: fit-content;
+      height: fit-content;
+      margin: auto;
+  
+      display: grid;
+      grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+    }  
+      
+    .gallery_img 
+    {
+      padding-top: 10px;
+      border: 1px solid #dbdbdb;
+      border-radius: 1px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  
+      /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+    }
+  
+    .box {
+    margin: 3px;
+    padding-top: 20px;
+  
+    }
+    #desc { 
+      border-bottom: 1px solid #dbdbdb;
+      border-right: 1px solid #dbdbdb;
+      border-left: 1px solid #dbdbdb;
+      border-radius: 1px;
+      font-size: 0.8em;
+      max-height: 80px;
+      color: black;
+      -moz-hyphens:auto;
+      -ms-hyphens:auto;
+      -webkit-hyphens:auto;
+      hyphens:auto;
+      word-wrap:break-word;
+      max-height: 50px;
+      max-width: 270px;
+      overflow-y: scroll;
+      /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+    }
+    .delete, .favs {
+      color: black;
+      font-size: 0.8em;
+      height: 10px;
+      
+    }
+    .favs:hover {
+      color: red;
+    }
+    .delete:hover {
+      color: red;
+    }
+  
+   
+  </style>
+{% if not photos %}
+<body onload="myFunction()">
+<script>
+  function myFunction() {
+    alert("No results for that search term.");
+            return window.location.replace("/gallery");
+  }
+</script>
+
+{% endif %}
+<h1 class="page-title">Search Results for: {{ search }}</h1>
+
+
+<div class="gallery">
+    
+    
+    {% for photo in photos %}
+    
+      <div class="box">
+        
+        
+        <a href="/static/{{ photo[0] }}/{{ photo[1] }}">
+            <img class="gallery_img" src="/static/{{ photo[0] }}/{{ photo[1] }}" alt="user_pic" width="270px" height="180px">
+      </a>
+        <div id="desc"><p class="desc_p" style="min-height: 20px; margin-left: 7px; margin-right: 20px;"> {{ photo[2] }}</p></div>
+        
+        <a style="float: left; padding-left: 10px;" class="favs" href="/favs/{{ photo[1] }}/{{ photo[2] }}" onclick="return confirm('Add to favourites?')">{{ photo[0] | title }}'s photo add to favourites</a>
+        
+        
+      </div>  
+      
+    {% endfor %}
+    </div>
+    {% for i in pic %}
+    <h2>{{ i[0] }}</h2>
+    {% endfor %}
+
+    <h5 style="text-align: center;"> {{ message }}</h5>
+
+{% endblock %}
+

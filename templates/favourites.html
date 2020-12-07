@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+<!-- gallery application -->
+{% block title %}
+Gallery
+{% endblock %}
+
+{% block main %}
+
+
+
+<style>
+  .gallery  {
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  }  
+    
+  .gallery_img 
+  {
+    padding-top: 10px;
+    border: 1px solid #dbdbdb;
+    border-radius: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+  }
+
+  .box {
+  margin: 3px;
+  padding-top: 20px;
+
+  }
+  #desc {
+    border-bottom: 1px solid #dbdbdb;
+    border-right: 1px solid #dbdbdb;
+    border-left: 1px solid #dbdbdb;
+    border-radius: 1px;
+    font-size: 0.8em;
+    max-height: 80px;
+    color: black;
+    -moz-hyphens:auto;
+    -ms-hyphens:auto;
+    -webkit-hyphens:auto;
+    hyphens:auto;
+    word-wrap:break-word;
+    max-height: 50px;
+    max-width: 270px;
+    overflow-y: scroll;
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+  }
+  .delete, .favs {
+    color: black;
+    font-size: 0.8em;
+    height: 10px;
+    
+  }
+  .delete:hover {
+    color: red;
+  }
+ 
+</style>
+
+<div class="page-title">
+  
+    <h1>Your Favourites</h1>
+
+</div>
+
+{% if pic_lst | length == 0 %}
+
+<h1 style="text-align: center;">You haven't favourited any photos yet.</h1>
+
+{% else %}
+<div class="gallery">
+ 
+      {% for i in pic_lst %}
+      
+      <div class="box">
+      <a href="/static/{{ i[0] }}/{{ i[1] }}">
+            <img class="gallery_img" src="/static/{{ i[0] }}/{{ i[1] }}" alt="user_pic" width="270px" height="180px">
+      </a>
+        <div id="desc"><p class="desc_p" style="min-height: 20px; margin-left: 7px; margin-right: 20px;"> {{ i[2] | replace('%20', ' ')}}</p></div>
+        <a style="padding-left: 10px" class="delete" href="/delete/{{ i[1] }}/fav" onclick="return confirm('Are you sure you want to remove this photo?')">Remove from favourites</a>
+      </div>  
+      
+    {% endfor %}
+    </div>
+  
+
+ {% endif %}
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+<!-- gallery application -->
+{% block title %}
+Index
+{% endblock %}
+
+{% block main %}
+
+<style>
+  .gallery {
+      text-align: center;
+  }
+  
+  img {
+    width: 50%;
+    border: 1px black;
+  }
+  .desc {
+    padding: 15px;
+    padding-top: 30px;
+    text-align: center;
+  }
+  .user_link {
+    margin-top: -4%;
+  }
+
+
+</style>
+
+<h1 class="page-title">Hey {{ username | title }}, check out some photos from your fellow benstagramers</h1>    
+
+{% for key, value in allpics.items() %}
+  {% if value[0] != username %}
+  <div class="desc"><p>From {{ value[0] | title }}'s Photos</p></div>  
+  
+  <div class="gallery">
+    <a target="_blank" href="/static/{{ value[0] + key }}">
+    <img src="/static/{{ value[0] + key  }}" alt="user_pic"></a>
+
+    <form class="user_link" action="/" method="POST">
+      <p style="visibility: hidden; height: 0%"><input type="text" name="user" value="{{ value[0] }}"></p>
+      <p><input type="submit" value="{{ value[0] | title }}'s Gallery"></p>
+    </form>  
+  </div>
+{% endif %}
+{% endfor %}   
+{% endblock %}

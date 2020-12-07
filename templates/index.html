@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+<!-- gallery application -->
+{% block title %}
+Index
+{% endblock %}
+
+{% block main %}
+
+<style>
+  .gallery {
+      text-align: center;
+  }
+  
+  img {
+    width: 50%;
+    border: 1px black;
+  }
+  .desc {
+    padding: 15px;
+    padding-top: 30px;
+    text-align: center;
+  }
+  .user_link {
+    margin-top: -4%;
+  }
+  
+  .other_gals{
+    text-align: center;
+    padding-bottom: 75px;
+    
+  }
+  .gals {
+    color: black;
+    text-decoration: none;
+    
+  }
+  .gals:hover{
+    color: red;
+  }
+</style>
+
+   
+
+
+{% if only  %}
+<h1 class="page-title">Hey {{ username | title }}, check out some of your photos</h1>   
+{% for key, value in allpics.items() %}
+{% if value[0] == username %}
+  
+  <div class="desc"><p>From {{ value[0] | title }}'s Photos</p></div>  
+  
+  <div class="gallery">
+    <a target="_blank" href="/static/{{ value[0] + key }}">
+    <img src="/static/{{ value[0] + key  }}" alt="user_pic"></a>
+    
+</div>
+<div class="other_gals" >
+  <a class="gals" href="/other_galleries/{{ value[0] }}">{{ value [0] | title }}'s Gallery</a>
+  </div>
+  
+
+{% endif %}
+{% endfor %}
+{% endif %}
+
+<h1 class="page-title">Hey {{ username | title }}, check out some photos from your fellow benstagramers</h1>  
+{% for key, value in allpics.items() %}
+{% if value[0] != username %} 
+  
+  <div class="gallery">
+    <a target="_blank" href="/static/{{ value[0] + key }}">
+    <img src="/static/{{ value[0] + key  }}" alt="user_pic"></a>
+</div>
+<div class="other_gals" >
+<a class="gals" href="/other_galleries/{{ value[0] }}">{{ value [0] | title }}'s Gallery</a>
+
+</div>
+{% endif %}
+{% endfor %}
+
+
+{% endblock %}

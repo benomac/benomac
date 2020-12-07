@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+<!-- gallery application -->
+{% block title %}
+UPLOAD A PIC!
+{% endblock %}
+
+{% block main %}
+<h1 class="page-title">Photo Upload</h1>
+<p class="uploadtext">Hi {{ username | title }}, you wanna upload some pics?</p>
+
+
+
+<div class="upload">
+    <form onsubmit="return warning();" action="/upload" method="POST" enctype="multipart/form-data">
+        <p><input id="file" type="file" name="file"></p>
+        <p><input id="tags" autocomplete="off" type="text" name="tags" placeholder="Tags"></p>
+        <p><input id="desc" autocomplete="off" type="text" name="description" placeholder="Description"></p>
+        <p><input type="submit" value="Submit"></p>
+        
+        
+        <script>
+        function warning() {
+            if( document.getElementById("file").files.length == 0 ) {
+            alert("Please slect a file");
+            return false;
+            }
+        
+            if (document.getElementById("tags").value === "") {
+            alert("Please enter some tags,\nthey help with the search");
+            return false;
+            }
+
+            if (document.getElementById("desc").value === "") {
+            alert("Please enter a description,\nit helps with the search");
+            return false;
+            }
+        };
+            
+        </script> 
+
+        {% with messages = get_flashed_messages() %} 
+            {% if messages %}
+                {% for message in messages %}
+                    <h5> {{ message }} </h5>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </form>
+</div>
+{% endblock %}
